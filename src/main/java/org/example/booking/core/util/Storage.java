@@ -25,13 +25,12 @@ import java.util.stream.Collectors;
 
 public class Storage {
     private static final Logger LOGGER = LoggerFactory.getLogger(Storage.class);
-    private static Set<String> allowedTypeParams = Arrays.asList(new String[]{"ticket", "user", "event"}).stream().collect(Collectors.toSet());
+    public static final Set<String> allowedTypeParams = Arrays.stream(new String[]{"ticket", "user", "event"}).collect(Collectors.toSet());
     private static Random random = new Random(System.nanoTime());
     private Map<String, Object> cache = new HashMap<>();
     private Set<String> emailSet = new HashSet<>();
     private ObjectMapper objectMapper = new ObjectMapper();
-    //    @Value("${booking.core.storage.file}")
-    public String storageFileName; //"core/storage.json"
+    public String storageFileName;
 
     public void init() throws IOException {
         loadMap(storageFileName);
@@ -44,32 +43,6 @@ public class Storage {
 
     public void destroy() throws IOException {
         saveMap(cache, new ClassPathResource(storageFileName));
-    }
-
-    public String storageKeyCreate(Object entity) {
-        String classParam = entity.getClass().getSimpleName().toLowerCase().replace("impl", "");
-        String key = null;
-        switch (classParam) {
-            case "event":
-                key = classParam + ":" + ((Event) entity).getId();
-                break;
-            case "user":
-                key = classParam + ":" + ((User) entity).getId();
-                break;
-            case "ticket":
-                key = classParam + ":" + ((Ticket) entity).getId();
-                break;
-            default:
-                throw new IllegalArgumentException("Passed object not a Event, User or Ticket");
-        }
-        return key;
-    }
-
-    public String storageKeyCreate(Class clazz, long id) {
-        String classParam = clazz.getSimpleName().toLowerCase().replace("impl", "");
-        if (!allowedTypeParams.contains(classParam))
-            throw new IllegalArgumentException("Class param is not allowed: " + clazz.getSimpleName());
-        return classParam + ":" + id;
     }
 
     public String createMapValue(Object entity) {
@@ -101,7 +74,6 @@ public class Storage {
                     LOGGER.warn(e.getMessage(), e);
                     throw new IllegalArgumentException("Exception during mapping User to String");
                 }
-                ;
                 break;
             default:
                 throw new IllegalArgumentException("Passed object not a Event, User or Ticket");
@@ -109,7 +81,7 @@ public class Storage {
         return value;
     }
 
-    public Map<String, String> convertStringObjectMap(Map<String, Object> inMemoryMap) {
+    Map<String, String> convertStringObjectMap(Map<String, Object> inMemoryMap) {
         Map<String, String> convertedMap = new HashMap<>();
         for (Map.Entry<String, Object> entry : inMemoryMap.entrySet()) {
             String key = entry.getKey();
@@ -120,8 +92,7 @@ public class Storage {
     }
 
     public void saveMap(Map<String, Object> stringObjectMap, Resource resource) throws IOException {
-//        FileWriter fileWriter = new FileWriter(resource.getFilename(), StandardCharsets.UTF_8);
-        FileWriter fileWriter = new FileWriter(resource.getFilename(), false);
+        FileWriter fileWriter = new FileWriter(resource.getFilename(), StandardCharsets.UTF_8);
         Map<String, String> mapAsString = convertStringObjectMap(stringObjectMap);
         objectMapper.writeValue(fileWriter, mapAsString);
     }
@@ -153,7 +124,7 @@ public class Storage {
     }
 
     public Event getEventById(long eventId) {
-        String key = storageKeyCreate(Event.class, eventId);
+        String key = BookingUtil.storageKeyCreate(Event.class, eventId);
         return (Event) cache.get(key);
     }
 
@@ -185,7 +156,7 @@ public class Storage {
         String key;
         do {
             id = random.nextLong();
-            key = storageKeyCreate(Event.class, id);
+            key = BookingUtil.storageKeyCreate(Event.class, id);
         } while (cache.get(key) != null);
 
         event.setId(id);
@@ -194,20 +165,20 @@ public class Storage {
     }
 
     public Event updateEvent(Event event) {
-        String key = storageKeyCreate(event);
+        String key = BookingUtil.storageKeyCreate(event);
         cache.put(key, event);
         return event;
     }
 
     public boolean deleteEvent(long eventId) {
-        String key = storageKeyCreate(Event.class, eventId);
+        String key = BookingUtil.storageKeyCreate(Event.class, eventId);
         Event deletedEvent = (Event) cache.remove(key);
         if (deletedEvent != null) return true;
         return false;
     }
 
     public User getUserById(long userId) {
-        String key = storageKeyCreate(User.class, userId);
+        String key = BookingUtil.storageKeyCreate(User.class, userId);
         return (User) cache.get(key);
     }
 
@@ -240,7 +211,7 @@ public class Storage {
         String key;
         do {
             id = random.nextLong();
-            key = storageKeyCreate(User.class, id);
+            key = BookingUtil.storageKeyCreate(User.class, id);
         } while (cache.get(key) != null);
 
         user.setId(id);
@@ -259,7 +230,7 @@ public class Storage {
 
     public User updateUser(User user) {
         User updated = null;
-        String key = storageKeyCreate(user);
+        String key = BookingUtil.storageKeyCreate(user);
         User oldUser = (User) cache.get(key);
         if (oldUser != null) {
             String newEmail = user.getEmail();
@@ -282,7 +253,7 @@ public class Storage {
     }
 
     public boolean deleteUser(long userId) {
-        String key = storageKeyCreate(User.class, userId);
+        String key = BookingUtil.storageKeyCreate(User.class, userId);
         if (cache.remove(key) != null) return true;
         return false;
     }
@@ -295,7 +266,7 @@ public class Storage {
             String key;
             do {
                 id = random.nextLong();
-                key = storageKeyCreate(Ticket.class, id);
+                key = BookingUtil.storageKeyCreate(Ticket.class, id);
             } while (cache.get(key) != null);
             Ticket ticket = new TicketImpl();
             ticket.setId(id);
@@ -318,7 +289,7 @@ public class Storage {
     }
 
     public List<Ticket> getBookedTickets(User user, int pageSize, int pageNum) {
-        Comparator<Ticket> ticketComparator = new Comparator<Ticket>() {
+        Comparator<Ticket> ticketComparator = new Comparator<>() {
             @Override
             public int compare(Ticket o1, Ticket o2) {
                 Event e1 = getEventById(o1.getEventId());
@@ -337,7 +308,7 @@ public class Storage {
     }
 
     public List<Ticket> getBookedTickets(Event event, int pageSize, int pageNum) {
-        Comparator<Ticket> ticketComparator = new Comparator<Ticket>() {
+        Comparator<Ticket> ticketComparator = new Comparator<>() {
             @Override
             public int compare(Ticket o1, Ticket o2) {
                 User e1 = getUserById(o1.getUserId());
@@ -355,7 +326,7 @@ public class Storage {
     }
 
     public boolean cancelTicket(long ticketId) {
-        if (cache.remove(storageKeyCreate(Ticket.class, ticketId)) != null) return true;
+        if (cache.remove(BookingUtil.storageKeyCreate(Ticket.class, ticketId)) != null) return true;
         return false;
     }
 

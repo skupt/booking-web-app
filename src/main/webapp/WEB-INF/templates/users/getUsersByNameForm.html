@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get users by Email</title>
+</head>
+<body>
+<h1>Get users by name Form</h1>
+<form method="get" th:action="@{/users/}">
+    <label th:for="name">Enter user name</label>
+    <input type="text" name="name" placeholder="tape name here">
+    <th:label for="pageSize">Enter number of rows on page:</th:label>
+    <input type="number" name="pageSize" value="5"/>
+    <th:label for="pageNumber"></th:label>
+    <input type="number" name="pageNumber" value="1"/>
+    <button type="submit">Get users</button>
+</form>
+
+</body>
+</html>

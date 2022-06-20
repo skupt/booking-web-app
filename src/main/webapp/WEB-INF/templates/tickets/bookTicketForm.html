@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book ticket form</title>
+</head>
+<body>
+<h1>Book Ticket</h1>
+<form method="post" th:action="@{/tickets/}">
+    <label th:for="userId"></label>
+    <input type="number" name="userId" id="userId" placeholder="type user id here">
+    <label th:for="eventId"></label>
+    <input type="number" name="eventId" id="eventId" placeholder="type event id here">
+    <label th:for="place"></label>
+    <input type="number" name="place" id="place" placeholder="type place here">
+    <label th:for="category"></label>
+    <select name="category" id="category" >
+        <option th:each="c : ${categories}" th:value="${c}" th:text="${c}">choose category</option>
+<!--        <option th:value="${c}" th:text="${c}"></option>-->
+    </select>
+    <button type="submit">Book ticket</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get Tickets</title>
+</head>
+<body>
+<h1>Get Tickets</h1>
+<div th:each="t : ${tickets}">
+    <p th:text="${t.toString()}"></p>
+</div>
+<a th:href="@{/}">Go home</a>
+
+</body>
+</html>

@@ -8,11 +8,11 @@ import org.example.booking.intro.model.User;
 import java.util.List;
 
 public class TicketDao {
+    private Storage storage;
+
     public void setStorage(Storage storage) {
         this.storage = storage;
     }
-
-    private Storage storage;
 
     public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
         return storage.bookTicket(userId, eventId, place, category);

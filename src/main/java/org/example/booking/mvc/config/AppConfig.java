@@ -24,12 +24,11 @@ public class AppConfig {
     @Value("${booking.core.storage.file}")
     private String storageFileName;
 
-    @Bean
+    @Bean(initMethod = "init", destroyMethod = "destroy")
     public Storage getStorage() throws IOException {
         String realFilePath = this.getClass().getClassLoader().getResource(storageFileName).getFile();
         Storage storage = new Storage();
         storage.setStorageFileName(realFilePath);
-        storage.init();
         return storage;
     }
 

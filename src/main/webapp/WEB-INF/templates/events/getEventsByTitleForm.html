@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Get events by title Form</title>
+</head>
+<body>
+<h1>Get events by title Form1</h1>
+
+<form name="f" method="GET" th:action="@{/events/}">
+    <th:label for="title">Enter title keyword:</th:label>
+    <input type="text" name="title"/>
+    <th:label for="pageSize">Enter number of rows on page:</th:label>
+    <input type="number" name="pageSize" value="5"/>
+    <th:label for="pageNumber"></th:label>
+    <input type="number" name="pageNumber" value="1"/>
+    <button type="submit">Submit</button>
+</form>
+
+<p><a th:href="@{/}">Go home page</a></p>
+
+</body>
+</html>
+
