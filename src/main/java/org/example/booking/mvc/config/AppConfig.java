@@ -3,15 +3,19 @@ package org.example.booking.mvc.config;
 import org.example.booking.core.dao.EventDao;
 import org.example.booking.core.dao.TicketDao;
 import org.example.booking.core.dao.UserDao;
-import org.example.booking.core.facade.BookingFacadeImpl;
 import org.example.booking.core.service.EventService;
 import org.example.booking.core.service.TicketService;
 import org.example.booking.core.service.UserService;
 import org.example.booking.core.util.Storage;
-import org.example.booking.intro.facade.BookingFacade;
+import org.example.booking.mvc.facade.BookingWebAppFacade;
+import org.example.booking.mvc.facade.impl.BookingWebAppFacadeImpl;
+import org.example.booking.mvc.utils.PdfGenerator;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
-import org.springframework.core.io.Resource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 
 import java.io.IOException;
 
@@ -23,6 +27,9 @@ public class AppConfig {
 
     @Value("${booking.core.storage.file}")
     private String storageFileName;
+
+    @Value("${booking.mvc.xml.input.filename}")
+    private String ticketsXmlInputFileName;
 
     @Bean(initMethod = "init", destroyMethod = "destroy")
     public Storage getStorage() throws IOException {
@@ -69,7 +76,16 @@ public class AppConfig {
     }
 
     @Bean
-    BookingFacade getBookingFacade() {
-        return new BookingFacadeImpl(getEventService(), getUserService(), getTicketService());
+    @Qualifier("bookingFacade")
+    BookingWebAppFacade getBookingFacade() {
+        BookingWebAppFacadeImpl bookingWebAppFacade = new BookingWebAppFacadeImpl(getEventService(), getUserService(), getTicketService());
+        bookingWebAppFacade.setBookingMvcXmlInputFilename(ticketsXmlInputFileName);
+        return bookingWebAppFacade;
+    }
+
+    @Bean
+    PdfGenerator getPdfGenerator() {
+        PdfGenerator pdfGenerator = new PdfGenerator();
+        return pdfGenerator;
     }
 }

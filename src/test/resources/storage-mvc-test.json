@@ -1,9 +1,5 @@
 {
   "event:12345": "{\"id\":12345,\"title\":\"Cinema\",\"date\":1196640600010}",
-  "event:999999": "{\"id\":999999,\"title\":\"Cinema\",\"date\":1196640600010}",
-  "user:1": "{\"id\":1,\"name\":\"Vasya1\",\"email\":\"email1@emaol.com\"}",
-  "user:2": "{\"id\":2,\"name\":\"Vasya2\",\"email\":\"email2@emaol.com\"}",
-  "user:3": "{\"id\":3,\"name\":\"Vasya3\",\"email\":\"email3@emaol.com\"}",
   "user:12345": "{\"id\":12345,\"name\":\"Vasya\",\"email\":\"email@emaol.com\"}",
   "user:12346": "{\"id\":12346,\"name\":\"Vasya\",\"email\":\"email@emaol.com\"}",
   "ticket:12345": "{\"id\":12345,\"eventId\":12345,\"userId\":12345,\"category\":\"BAR\",\"place\":12}",
