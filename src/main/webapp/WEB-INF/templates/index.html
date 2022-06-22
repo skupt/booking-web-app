@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking-webapp</title>
+</head>
+<body>
+<h1>Booking facade presentation</h1>
+<h2>Events</h2>
+<ul>
+    <li>
+        <a th:href="@{events/getEventByIdForm}">Get events by id</a>
+    </li>
+    <li>
+        <a th:href="@{events/getEventsByTitleForm}">Get events by title</a>
+    </li>
+    <li>
+        <a th:href="@{events/getEventsForDayForm}">Get events for day</a>
+    </li>
+    <li>
+        <a th:href="@{events/createEventForm}">Create event</a>
+    </li>
+    <li>
+        <a th:href="@{events/updateEventForm}">Update event</a>
+    </li>
+    <li>
+        <a th:href="@{events/deleteEventForm}">Delete event</a>
+    </li>
+</ul>
+<h2>Users</h2>
+<ul>
+    <li>
+        <a th:href="@{users/getUserByIdForm}">Get user by id</a>
+    </li>
+    <li>
+        <a th:href="@{users/getUserByEmailForm}">Get users by email</a>
+    </li>
+    <li>
+        <a th:href="@{users/getUsersByNameForm}">Get users by name</a>
+    </li>
+    <li>
+        <a th:href="@{users/createUserForm}">Create new user</a>
+    </li>
+    <li>
+        <a th:href="@{users/updateUserForm}">Update user</a>
+    </li>
+    <li>
+        <a th:href="@{users/deleteUserForm}">Delete user</a>
+    </li>
+</ul>
+<h2>Tickets</h2>
+<ul>
+    <li>
+        <a th:href="@{tickets/bookTicketForm}">Book ticket</a>
+    </li>
+    <li>
+        <a th:href="@{tickets/getBookedTicketsByUserForm}">Get booked tickets by user</a>
+    </li>
+    <li>
+        <a th:href="@{tickets/getBookedTicketsByEventForm}">Get booked tickets by event</a>
+    </li>
+    <li>
+        <a th:href="@{tickets/cancelTicketForm}">Cancel ticket</a>
+    </li>
+    <li>
+        <a th:href="@{tickets/getBookedTicketsByUserFormPdf}">Get booked tickets by user in PDF</a>
+    </li>
+    <li>
+        <a th:href="@{tickets/preloadXmlTicketsForm}">PreloadXmlTickets</a>
+    </li>
+</ul>
+</body>
+</html>

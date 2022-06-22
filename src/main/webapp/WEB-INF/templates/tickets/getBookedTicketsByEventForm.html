@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book ticket form</title>
+</head>
+<body>
+<h1>Book Ticket</h1>
+<form method="get" th:action="@{/tickets/}">
+    <label th:for="eventId">Event id:</label>
+    <input type="number" name="eventId" id="eventId" placeholder="type event id here">
+    <br>
+    <th:label for="pageSize">Number of rows on page:</th:label>
+    <input type="number" name="pageSize" value="5"/>
+    <br>
+    <th:label for="pageNumber">Page number:</th:label>
+    <input type="number" name="pageNumber" value="1"/>
+    <br>
+    <button type="submit">Get booked tickets</button>
+</form>
+</body>
+</html>
