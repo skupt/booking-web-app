@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get users by id</title>
+</head>
+<body>
+<h1>Get user by id Form</h1>
+<form method="get" th:action="@{/users/}">
+    <label th:for="id">Enter user id</label>
+    <input type="number" name="id" placeholder="tape id here">
+    <button type="submit">Get user</button>
+</form>
+
+</body>
+</html>
