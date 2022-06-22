@@ -53,6 +53,7 @@ public class TicketsController {
     public String getBookedTicketsByUser(@RequestParam("userId") long userId, @RequestParam("pageSize") int pageSize,
                                          @RequestParam("pageNumber") int pageNUmber, Model model) {
         User user = bookingFacade.getUserById(userId);
+        if (user == null) throw new RuntimeException("Nothing to show. No event having this id: " + userId);
         List<Ticket> ticketList = bookingFacade.getBookedTickets(user, pageSize, pageNUmber);
         model.addAttribute("tickets", ticketList);
         return "tickets/getTickets.html";
@@ -67,6 +68,7 @@ public class TicketsController {
     public String getBookedTicketsByEvent(@RequestParam("eventId") long eventId, @RequestParam("pageSize") int pageSize,
                                           @RequestParam("pageNumber") int pageNUmber, Model model) {
         Event event = bookingFacade.getEventById(eventId);
+        if (event == null) throw new RuntimeException("Nothing to show. No event having this id: " + eventId);
         List<Ticket> ticketList = bookingFacade.getBookedTickets(event, pageSize, pageNUmber);
         model.addAttribute("tickets", ticketList);
         return "tickets/getTickets.html";
