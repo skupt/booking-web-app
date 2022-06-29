@@ -2,10 +2,24 @@ package org.example.booking.core.model;
 
 import org.example.booking.intro.model.User;
 
+import javax.persistence.*;
+import java.util.Set;
+
+@Entity
+@Table(name = "user_impl") //, uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 public class UserImpl implements User, Cloneable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "email")
     private String email;
+    @OneToOne(mappedBy = "userImpl", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private UserAccount userAccount;
+    @OneToMany(mappedBy = "user")
+    private Set<TicketImpl> tickets;
 
     public UserImpl() {
     }

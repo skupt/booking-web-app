@@ -1,7 +1,10 @@
 package org.example.booking.mvc.utils;
 
+import org.example.booking.core.model.EventImpl;
 import org.example.booking.core.model.TicketImpl;
+import org.example.booking.core.model.UserImpl;
 import org.example.booking.intro.model.Ticket;
+import org.example.booking.intro.model.User;
 import org.example.booking.mvc.models.Tickets;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +19,11 @@ public class XmlHelperTest {
         tickets = new Tickets();
         ArrayList<TicketImpl> ticketList = new ArrayList<>();
         for (int i = 1; i < 3; i++) {
-            ticketList.add(new TicketImpl(i, i, i, Ticket.Category.BAR, i));
+            UserImpl user = new UserImpl();
+            user.setId(i);
+            EventImpl event = new EventImpl();
+            event.setId(i);
+            ticketList.add(new TicketImpl(i, event, user, Ticket.Category.BAR, i));
         }
         tickets.setTickets(ticketList);
     }

@@ -1,21 +1,36 @@
 package org.example.booking.core.model;
 
+import lombok.Data;
 import org.example.booking.intro.model.Ticket;
 
-public class TicketImpl implements Ticket, Cloneable {
+import javax.persistence.*;
+
+@Data
+@Entity
+@Table(name = "ticket")
+public class TicketImpl implements Ticket, Cloneable, Comparable<TicketImpl> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
-    private long eventId;
-    private long userId;
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private EventImpl event;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserImpl user;
+    @Enumerated(EnumType.STRING)
     private Category category;
+    @Column(name = "place")
     private int place;
 
     public TicketImpl() {
     }
 
-    public TicketImpl(long id, long eventId, long userId, Category category, int place) {
+    public TicketImpl(long id, EventImpl event, UserImpl user, Category category, int place) {
         this.id = id;
-        this.eventId = eventId;
-        this.userId = userId;
+        this.event = event;
+        this.user = user;
         this.category = category;
         this.place = place;
     }
@@ -32,22 +47,22 @@ public class TicketImpl implements Ticket, Cloneable {
 
     @Override
     public long getEventId() {
-        return eventId;
+        return event.getId();
     }
 
     @Override
     public void setEventId(long eventId) {
-        this.eventId = eventId;
+        this.event.setId(eventId);
     }
 
     @Override
     public long getUserId() {
-        return userId;
+        return user.getId();
     }
 
     @Override
     public void setUserId(long userId) {
-        this.userId = userId;
+        this.user.setId(userId);
     }
 
     @Override
@@ -74,8 +89,8 @@ public class TicketImpl implements Ticket, Cloneable {
     public String toString() {
         return "TicketImpl{" +
                 "id=" + id +
-                ", eventId=" + eventId +
-                ", userId=" + userId +
+                ", eventId=" + event.getId() +
+                ", userId=" + user.getId() +
                 ", category=" + category +
                 ", place=" + place +
                 '}';
@@ -84,5 +99,10 @@ public class TicketImpl implements Ticket, Cloneable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    @Override
+    public int compareTo(TicketImpl o) {
+        return o.getEvent().getDate().compareTo(this.event.getDate());
     }
 }

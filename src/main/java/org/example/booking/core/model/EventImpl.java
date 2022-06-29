@@ -2,12 +2,23 @@ package org.example.booking.core.model;
 
 import org.example.booking.intro.model.Event;
 
+import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
+@Entity
+@Table(name = "event")
 public class EventImpl implements Event {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
+    @Column(name = "title")
     private String title;
+    @Column(name = "date")
     private Date date;
+    @OneToMany(mappedBy = "event")
+    private Set<TicketImpl> tickets;
 
     public EventImpl() {
     }

@@ -31,61 +31,61 @@ public class AppConfig {
     @Value("${booking.mvc.xml.input.filename}")
     private String ticketsXmlInputFileName;
 
-    @Bean(initMethod = "init", destroyMethod = "destroy")
-    public Storage getStorage() throws IOException {
-        String realFilePath = this.getClass().getClassLoader().getResource(storageFileName).getFile();
-        Storage storage = new Storage();
-        storage.setStorageFileName(realFilePath);
-        return storage;
-    }
-
-    @Bean
-    public UserDao getUserDao() throws IOException {
-        UserDao userDao = new UserDao();
-        userDao.setStorage(getStorage());
-        return userDao;
-    }
-
-    @Bean
-    public EventDao getEventDao() throws IOException {
-        EventDao eventDao = new EventDao();
-        eventDao.setStorage(getStorage());
-        return eventDao;
-    }
-
-    @Bean
-    public TicketDao getTicketDao() throws IOException {
-        TicketDao ticketDao = new TicketDao();
-        ticketDao.setStorage(getStorage());
-        return ticketDao;
-    }
-
-    @Bean
-    public UserService getUserService() {
-        return new UserService();
-    }
-
-    @Bean
-    public EventService getEventService() {
-        return new EventService();
-    }
-
-    @Bean
-    TicketService getTicketService() {
-        return new TicketService();
-    }
-
-    @Bean
-    @Qualifier("bookingFacade")
-    BookingWebAppFacade getBookingFacade() {
-        BookingWebAppFacadeImpl bookingWebAppFacade = new BookingWebAppFacadeImpl(getEventService(), getUserService(), getTicketService());
-        bookingWebAppFacade.setBookingMvcXmlInputFilename(ticketsXmlInputFileName);
-        return bookingWebAppFacade;
-    }
-
-    @Bean
-    PdfGenerator getPdfGenerator() {
-        PdfGenerator pdfGenerator = new PdfGenerator();
-        return pdfGenerator;
-    }
+//    @Bean(initMethod = "init", destroyMethod = "destroy")
+//    public Storage getStorage() throws IOException {
+//        String realFilePath = this.getClass().getClassLoader().getResource(storageFileName).getFile();
+//        Storage storage = new Storage();
+//        storage.setStorageFileName(realFilePath);
+//        return storage;
+//    }
+//
+//    @Bean
+//    public UserDao getUserDao() throws IOException {
+//        UserDao userDao = new UserDao();
+//        userDao.setStorage(getStorage());
+//        return userDao;
+//    }
+//
+//    @Bean
+//    public EventDao getEventDao() throws IOException {
+//        EventDao eventDao = new EventDao();
+//        eventDao.setStorage(getStorage());
+//        return eventDao;
+//    }
+//
+//    @Bean
+//    public TicketDao getTicketDao() throws IOException {
+//        TicketDao ticketDao = new TicketDao();
+//        ticketDao.setStorage(getStorage());
+//        return ticketDao;
+//    }
+//
+//    @Bean
+//    public UserService getUserService() {
+//        return new UserService();
+//    }
+//
+//    @Bean
+//    public EventService getEventService() {
+//        return new EventService();
+//    }
+//
+//    @Bean
+//    TicketService getTicketService() {
+//        return new TicketService();
+//    }
+//
+//    @Bean
+//    @Qualifier("bookingFacade")
+//    BookingWebAppFacade getBookingFacade() {
+//        BookingWebAppFacadeImpl bookingWebAppFacade = new BookingWebAppFacadeImpl(getEventService(), getUserService(), getTicketService());
+//        bookingWebAppFacade.setBookingMvcXmlInputFilename(ticketsXmlInputFileName);
+//        return bookingWebAppFacade;
+//    }
+//
+//    @Bean
+//    PdfGenerator getPdfGenerator() {
+//        PdfGenerator pdfGenerator = new PdfGenerator();
+//        return pdfGenerator;
+//    }
 }

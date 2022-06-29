@@ -22,7 +22,7 @@ public class UsersController {
         return "users/getUserByIdForm.html";
     }
 
-    @GetMapping(value="/", params = "id")
+    @GetMapping(value = "/", params = "id")
     public String getUserById(@RequestParam("id") long id, Model model) {
         User user = bookingFacade.getUserById(id);
         model.addAttribute("user", user);
@@ -35,7 +35,7 @@ public class UsersController {
         return "users/getUserByEmailForm.html";
     }
 
-    @GetMapping(value="/", params = "email")
+    @GetMapping(value = "/", params = "email")
     public String getUserByEmail(@RequestParam("email") String email, Model model) {
         User user = bookingFacade.getUserByEmail(email);
         model.addAttribute("user", user);
@@ -47,7 +47,7 @@ public class UsersController {
         return "users/getUsersByNameForm.html";
     }
 
-    @GetMapping(value="/", params = {"name", "pageSize", "pageNumber"})
+    @GetMapping(value = "/", params = {"name", "pageSize", "pageNumber"})
     public String getUsersByName(@RequestParam("name") String name, @RequestParam("pageSize") int paggeSize,
                                  @RequestParam("pageNumber") int pageNumber, Model model) {
         List<User> userList = bookingFacade.getUsersByName(name, paggeSize, pageNumber);
@@ -69,7 +69,7 @@ public class UsersController {
         User created = bookingFacade.createUser(user);
         redirectAttributes.addFlashAttribute("msg", created != null ? "User was created." : "User was not created.");
 
-        return "redirect:/success.html";
+        return "redirect:/success";
     }
 
     @GetMapping("updateUserForm")
@@ -77,9 +77,10 @@ public class UsersController {
         return "users/updateUserForm.html";
     }
 
-    @PutMapping("/")
+    @PutMapping(value = "/", params = {"id", "name", "email"})
     public String updateUser(@RequestParam("id") long id, @RequestParam("name") String name,
                              @RequestParam("email") String email, RedirectAttributes redirectAttributes) {
+        System.out.println("controller.updateUser");
         User user = new UserImpl();
         user.setId(id);
         user.setName(name);
@@ -87,7 +88,7 @@ public class UsersController {
         User updated = bookingFacade.updateUser(user);
         redirectAttributes.addFlashAttribute("msg", updated != null ? "User was updated" : "User was not updated");
 
-        return "redirect:/success.html";
+        return "redirect:/success";
     }
 
     @GetMapping("deleteUserForm")
@@ -100,7 +101,7 @@ public class UsersController {
         boolean result = bookingFacade.deleteUser(id);
         redirectAttributes.addFlashAttribute("msg", result ? "User was deleted" : "User was not deleted");
 
-        return "redirect:/success.html";
+        return "redirect:/success";
     }
 
 
