@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "ticket")
 public class TicketImpl implements Ticket, Cloneable, Comparable<TicketImpl> {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
     @ManyToOne

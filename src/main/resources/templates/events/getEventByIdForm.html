@@ -7,10 +7,11 @@
 <body>
 <h1>Get event by id Form</h1>
 <!--<form th:action="@{getEventById}">-->
-    <form th:action="@{/events/}">
+<form th:action="@{/events/}">
     <label th:for="id">Enter id: </label>
     <input type="number" name="id" placeholder="12345">
     <button type="submit">Get Entity</button>
+    <a th:href="@{/}">Go home</a>
 </form>
 </body>
 </html>

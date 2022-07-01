@@ -8,7 +8,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,12 +19,10 @@ public class UserService {
     private UserDao userDao;
 
     public User getUserById(long userId) {
-//        return userDao.getUserById(userId);
         return userDao.findById(userId).orElse(null);
     }
 
     public User getUserByEmail(String email) {
-//        return userDao.getUserByEmail(email);
         UserImpl userExample = new UserImpl();
         userExample.setEmail(email);
         ExampleMatcher ignoringPropsMatcher = ExampleMatcher.matchingAny()
@@ -36,7 +33,6 @@ public class UserService {
     }
 
     public List<User> getUsersByName(String name, int pageSize, int pageNum) {
-//        return userDao.getUsersByName(name, pageSize, pageNum);
         UserImpl userExample = new UserImpl();
         userExample.setEmail(name);
         ExampleMatcher ignoringPropsMatcher = ExampleMatcher.matchingAny()
@@ -49,25 +45,14 @@ public class UserService {
     }
 
     public User createUser(User user) {
-//        return userDao.createUser(user);
         return userDao.save((UserImpl) user);
     }
 
-    @Transactional
     public User updateUser(User user) {
-        System.out.println("uaerservice.updateUser");
-        int rowsUpdated = userDao.update111(user.getId(), user.getName(), user.getEmail());
-        try {
-            System.out.println("updated");
-            if (rowsUpdated > 0) return (User) ((UserImpl) user).clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Cloninig of user exception", e);
-        }
-        return null;
+        return userDao.save((UserImpl) user);
     }
 
     public boolean deleteUser(long userId) {
-//        return userDao.deleteUser(userId);
         userDao.deleteById(userId);
         return true;
     }

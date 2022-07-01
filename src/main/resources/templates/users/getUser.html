@@ -6,8 +6,12 @@
 </head>
 <body>
 <h1>Get User</h1>
-<p th:text="${user.toString()}"></p>
-
+<div th:if="${user != null}">
+    <p th:text="${user.toString()}"></p>
+</div>
+<div th:if="${user == null}">
+    <p>User is not exists</p>
+</div>
 <a th:href="@{/}">Go home</a>
 
 </body>

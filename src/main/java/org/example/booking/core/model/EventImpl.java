@@ -1,22 +1,27 @@
 package org.example.booking.core.model;
 
+import lombok.Data;
 import org.example.booking.intro.model.Event;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "event")
-public class EventImpl implements Event {
+public class EventImpl implements Event, EventExtended {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
     @Column(name = "title")
     private String title;
     @Column(name = "date")
     private Date date;
+    @Column(name = "price")
+    private BigDecimal price;
     @OneToMany(mappedBy = "event")
     private Set<TicketImpl> tickets;
 
@@ -65,6 +70,7 @@ public class EventImpl implements Event {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", date=" + date +
+                ", price=" + price +
                 '}';
     }
 }

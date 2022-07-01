@@ -9,15 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("events")
@@ -33,7 +30,7 @@ public class EventsController {
         return "events/getEventByIdForm.html";
     }
 
-    @GetMapping(value="/", params = "id")
+    @GetMapping(value = "/", params = "id")
     public String getEventById(@RequestParam("id") long id, Model model) {
         Event event = bookingFacade.getEventById(id);
         model.addAttribute("event", event);
@@ -45,7 +42,7 @@ public class EventsController {
         return "events/getEventsByTitleForm.html";
     }
 
-    @GetMapping(value="/", params = {"title", "pageSize", "pageNumber"})
+    @GetMapping(value = "/", params = {"title", "pageSize", "pageNumber"})
     public String getEventsByTitle(@RequestParam("title") String title,
                                    @RequestParam("pageSize") int pageSize,
                                    @RequestParam("pageNumber") int pageNumber, Model model) {
@@ -75,21 +72,22 @@ public class EventsController {
         return "events/createEventForm.html";
     }
 
-    @PostMapping(value = "/", params = {"title", "date", "hour", "minute"})
+    @PostMapping(value = "/", params = {"title", "date", "hour", "minute", "price"})
     public RedirectView createEvent(@RequestParam("title") String title, @RequestParam("date") String date,
                                     @RequestParam("hour") int hour, @RequestParam("minute") int minute,
-                                    RedirectAttributes redirectAttributes) throws ParseException {
+                                    @RequestParam("price") BigDecimal price, RedirectAttributes redirectAttributes) throws ParseException {
 
         Date parsedDate = dateFormatter.parse(date, null);
         parsedDate.setHours(hour);
         parsedDate.setMinutes(minute);
-        Event event =  new EventImpl();
+        EventImpl event = new EventImpl();
         event.setDate(parsedDate);
         event.setTitle(title);
+        event.setPrice(price);
         Event createdEvent = bookingFacade.createEvent(event);
-        redirectAttributes.addAttribute("msg", "Event_created.");
+        redirectAttributes.addFlashAttribute("msg", "Event created." + createdEvent);
 
-        return new RedirectView("/success.html", true);
+        return new RedirectView("/success", true);
     }
 
     @GetMapping("updateEventForm")
@@ -104,14 +102,14 @@ public class EventsController {
         Date parsedDate = dateFormatter.parse(date, null);
         parsedDate.setHours(hour);
         parsedDate.setMinutes(minute);
-        Event event =  new EventImpl();
+        Event event = new EventImpl();
         event.setId(id);
         event.setDate(parsedDate);
         event.setTitle(title);
         Event updatedEvent = bookingFacade.updateEvent(event);
-        redirectAttributes.addAttribute("msg", "Event_updated.");
+        redirectAttributes.addFlashAttribute("msg", "Event_updated.");
 
-        return new RedirectView("/success.html", true);
+        return new RedirectView("/success", true);
     }
 
     @GetMapping("deleteEventForm")
@@ -124,7 +122,7 @@ public class EventsController {
         boolean result = bookingFacade.deleteEvent(id);
         redirectAttributes.addFlashAttribute("msg", result == true ? "Event was deleted." : "Event was not deleted.");
 
-        return "redirect:/success.html";
+        return "redirect:/success";
     }
 
 }

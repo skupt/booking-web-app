@@ -22,5 +22,9 @@ public class RootController {
         return "success.html";
     }
 
+    @RequestMapping("inform")
+    public String inform() {
+        return "inform.html";
+    }
 
 }

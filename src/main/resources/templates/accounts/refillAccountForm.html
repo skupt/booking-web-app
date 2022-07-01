@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Check account</title>
+</head>
+<body>
+<h1>Refill account form</h1>
+<form th:method="POST" th:action="@{/accounts/}">
+    <label th:for="id">Enter user id</label>
+    <input type="number" name="id" placeholder="tape id here" required>
+    <label th:for="amount">Enter money amount</label>
+    <input type="number" name="amount" value="0" min="0" required placeholder="tape amount here">
+    <button type="submit">Refill account</button>
+</form>
+
+</body>
+</html>

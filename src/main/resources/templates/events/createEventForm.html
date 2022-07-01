@@ -10,7 +10,8 @@
   $( function() {
     $( "#datepicker" ).datepicker();
   } );
-  </script>
+
+    </script>
 </head>
 <body>
 <h1>Create event form</h1>
@@ -23,6 +24,8 @@
     <input type="number" name="hour" min="0" max="23" placeholder="Hours (0-23)" value="0">
     <label th:for="minute"></label>
     <input type="number" name="minute" min="0" max="59" placeholder="Minutes(0-60)" value="0">
+    <label th:for="price"></label>
+    <input type="number" name="price" min="0" placeholder="price" value="0">
     <button type="sibmit">Create new event</button>
 </form>
 </body>

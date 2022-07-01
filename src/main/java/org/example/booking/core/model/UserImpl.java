@@ -6,10 +6,10 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "user_impl") //, uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
+@Table(name = "user_impl", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 public class UserImpl implements User, Cloneable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "name")
     private String name;
@@ -58,6 +58,14 @@ public class UserImpl implements User, Cloneable {
     @Override
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
     }
 
     @Override

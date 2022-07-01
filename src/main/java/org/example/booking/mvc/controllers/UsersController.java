@@ -80,7 +80,6 @@ public class UsersController {
     @PutMapping(value = "/", params = {"id", "name", "email"})
     public String updateUser(@RequestParam("id") long id, @RequestParam("name") String name,
                              @RequestParam("email") String email, RedirectAttributes redirectAttributes) {
-        System.out.println("controller.updateUser");
         User user = new UserImpl();
         user.setId(id);
         user.setName(name);

@@ -40,8 +40,8 @@ public class TicketsController {
                              @RequestParam("place") int place, @RequestParam("category") String category,
                              RedirectAttributes redirectAttributes) {
         Ticket ticket = bookingFacade.bookTicket(userId, eventId, place, Ticket.Category.valueOf(category));
-        redirectAttributes.addFlashAttribute("msg", ticket != null ? "Ticket is booked: " + ticket : "Ticket is not Booked");
-        return "redirect:/success.html";
+        redirectAttributes.addFlashAttribute("msg", ticket != null ? "Ticket is booked: " + ticket : "Ticket is not Booked, place is not free");
+        return "redirect:/success";
     }
 
     @GetMapping("getBookedTicketsByUserForm")

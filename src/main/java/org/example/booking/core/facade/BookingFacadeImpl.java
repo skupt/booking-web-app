@@ -1,5 +1,6 @@
 package org.example.booking.core.facade;
 
+import org.example.booking.core.model.EventExtended;
 import org.example.booking.core.service.EventService;
 import org.example.booking.core.service.TicketService;
 import org.example.booking.core.service.UserService;
@@ -24,7 +25,7 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
-    public Event getEventById(long eventId) {
+    public EventExtended getEventById(long eventId) {
         return eventService.getEventById(eventId);
     }
 
