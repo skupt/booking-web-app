@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cancel ticket form</title>
+</head>
+<body>
+<h1>Cancel ticket</h1>
+<form th:method="DELETE" th:action="@{/tickets/}">
+    <label th:for="ticketId">Ticket id:</label>
+    <input type="number" name="ticketId" id="ticketId" placeholder="type ticket id here">
+    <button type="submit">Cancel ticket</button>
+</form>
+</body>
+</html>

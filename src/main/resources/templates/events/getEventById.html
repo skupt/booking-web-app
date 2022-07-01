@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Get event by id</title>
+</head>
+<body>
+<h1>Get event by id</h1>
+<p th:if="${event != null}" th:text="${event.toString()}"></p>
+<p th:if="${event == null}">Event does not exist</p>
+<a th:href="@{/}">Go home</a>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create event form</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+
+    </script>
+</head>
+<body>
+<h1>Create event form</h1>
+<form method="post" th:action="@{/events/}">
+    <label th:for="title"></label>
+    <input type="text" name="title" placeholder="Enter event title here">
+    <label th:for="date"></label>
+    <input type="date" name="date" id="datepicker">
+    <label th:for="hour"></label>
+    <input type="number" name="hour" min="0" max="23" placeholder="Hours (0-23)" value="0">
+    <label th:for="minute"></label>
+    <input type="number" name="minute" min="0" max="59" placeholder="Minutes(0-60)" value="0">
+    <label th:for="price"></label>
+    <input type="number" name="price" min="0" placeholder="price" value="0">
+    <button type="sibmit">Create new event</button>
+</form>
+</body>
+</html>
