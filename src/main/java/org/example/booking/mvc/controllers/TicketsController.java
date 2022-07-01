@@ -1,5 +1,6 @@
 package org.example.booking.mvc.controllers;
 
+import org.example.booking.intro.facade.BookingFacade;
 import org.example.booking.intro.model.Event;
 import org.example.booking.intro.model.Ticket;
 import org.example.booking.intro.model.User;
@@ -25,7 +26,9 @@ import java.util.stream.Collectors;
 public class TicketsController {
 
     @Autowired
-    private BookingWebAppFacade bookingFacade;
+    private BookingFacade bookingFacade;
+    @Autowired
+    private BookingWebAppFacade bookingWebAppFacade;
     @Autowired
     private PdfGenerator pdfGenerator;
 
@@ -115,7 +118,7 @@ public class TicketsController {
     @PostMapping("batchCreation")
     public String preloadXmlTickets(RedirectAttributes redirectAttributes) {
         try {
-            bookingFacade.preloadTickets();
+            bookingWebAppFacade.preloadTickets();
             redirectAttributes.addFlashAttribute("msg", "Tickets were preloaded.");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("msg", "Tickets were not preloaded.");

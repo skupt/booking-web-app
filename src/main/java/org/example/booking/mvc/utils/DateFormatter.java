@@ -1,7 +1,5 @@
 package org.example.booking.mvc.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.format.Formatter;
 import org.springframework.stereotype.Component;
 
@@ -12,24 +10,24 @@ import java.util.Locale;
 
 @Component
 public class DateFormatter implements Formatter<Date> {
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
 
     public DateFormatter() {
         super();
     }
 
-    public Date parse(final String text, final Locale locale) throws ParseException {
-        final SimpleDateFormat dateFormat = createDateFormat(locale);
+    public Date parse(String text, Locale locale) throws ParseException {
+        SimpleDateFormat dateFormat = createDateFormat();
         return dateFormat.parse(text);
     }
 
-    public String print(final Date object, final Locale locale) {
-        final SimpleDateFormat dateFormat = createDateFormat(locale);
+    public String print(Date object, Locale locale) {
+        SimpleDateFormat dateFormat = createDateFormat();
         return dateFormat.format(object);
     }
 
-    private SimpleDateFormat createDateFormat(final Locale locale) {
-        final String format = "yyyy-MM-dd";
-        final SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+    private SimpleDateFormat createDateFormat() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         dateFormat.setLenient(false);
         return dateFormat;
     }

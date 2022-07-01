@@ -21,39 +21,36 @@ public class PdfGenerator {
     public ByteArrayInputStream ticketReport(List<Ticket> ticketList) {
         Document document = new Document();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
         try {
-            PdfPTable pdfPTable = new PdfPTable(1);
-            pdfPTable.setWidthPercentage(80);
-            pdfPTable.setWidths(new  int[]{1});
-
-            Font headFont = FontFactory.getFont(FontFactory.COURIER_BOLD);
-            PdfPCell head = new PdfPCell(new Phrase("Tickets description", headFont));
-            head.setHorizontalAlignment(Element.ALIGN_CENTER);
-            pdfPTable.addCell(head);
-
-            Font cellFont = FontFactory.getFont(FontFactory.COURIER);
-            for(Ticket ticket : ticketList) {
-                PdfPCell cell = new PdfPCell(new Phrase(ticket.toString(), cellFont));
-                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-                pdfPTable.addCell(cell);
-            }
-
+            PdfPTable pdfPTable = createPdfPTable(ticketList);
             PdfWriter.getInstance(document, baos);
             document.open();
             document.add(pdfPTable);
             document.close();
-
         } catch (DocumentException e) {
             LOGGER.warn(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);
         }
-
         return new ByteArrayInputStream(baos.toByteArray());
     }
 
-
+    private PdfPTable createPdfPTable(List<Ticket> ticketList) throws DocumentException {
+        PdfPTable pdfPTable = new PdfPTable(1);
+        pdfPTable.setWidthPercentage(80);
+        pdfPTable.setWidths(new int[]{1});
+        Font headFont = FontFactory.getFont(FontFactory.COURIER_BOLD);
+        PdfPCell head = new PdfPCell(new Phrase("Tickets description", headFont));
+        head.setHorizontalAlignment(Element.ALIGN_CENTER);
+        pdfPTable.addCell(head);
+        Font cellFont = FontFactory.getFont(FontFactory.COURIER);
+        for (Ticket ticket : ticketList) {
+            PdfPCell cell = new PdfPCell(new Phrase(ticket.toString(), cellFont));
+            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+            cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+            pdfPTable.addCell(cell);
+        }
+        return pdfPTable;
+    }
 
 
 }

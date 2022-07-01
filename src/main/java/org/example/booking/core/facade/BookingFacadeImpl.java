@@ -8,10 +8,12 @@ import org.example.booking.intro.facade.BookingFacade;
 import org.example.booking.intro.model.Event;
 import org.example.booking.intro.model.Ticket;
 import org.example.booking.intro.model.User;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class BookingFacadeImpl implements BookingFacade {
 
     private final EventService eventService;

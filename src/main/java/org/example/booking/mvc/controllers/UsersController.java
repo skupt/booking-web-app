@@ -26,7 +26,6 @@ public class UsersController {
     public String getUserById(@RequestParam("id") long id, Model model) {
         User user = bookingFacade.getUserById(id);
         model.addAttribute("user", user);
-
         return "users/getUser.html";
     }
 
@@ -52,7 +51,6 @@ public class UsersController {
                                  @RequestParam("pageNumber") int pageNumber, Model model) {
         List<User> userList = bookingFacade.getUsersByName(name, paggeSize, pageNumber);
         model.addAttribute("users", userList);
-
         return "users/getUsers.html";
     }
 
@@ -68,7 +66,6 @@ public class UsersController {
         user.setEmail(email);
         User created = bookingFacade.createUser(user);
         redirectAttributes.addFlashAttribute("msg", created != null ? "User was created." : "User was not created.");
-
         return "redirect:/success";
     }
 
@@ -86,7 +83,6 @@ public class UsersController {
         user.setEmail(email);
         User updated = bookingFacade.updateUser(user);
         redirectAttributes.addFlashAttribute("msg", updated != null ? "User was updated" : "User was not updated");
-
         return "redirect:/success";
     }
 
@@ -99,9 +95,6 @@ public class UsersController {
     public String deleteUser(@RequestParam("id") long id, RedirectAttributes redirectAttributes) {
         boolean result = bookingFacade.deleteUser(id);
         redirectAttributes.addFlashAttribute("msg", result ? "User was deleted" : "User was not deleted");
-
         return "redirect:/success";
     }
-
-
 }
